@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <title>Job task - endpoints</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <br><br>
+    <h2>Your endpoints</h2>
+    <br>
+    <table class="table table-responsive table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Url</th>
+            <th>Created at</th>
+            <th>Last checked</th>
+            <th>Interval</th>
+            <th>Owner</th>
+            <th>Results</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="endpoint : ${endpoints}">
+            <td th:text="${endpoint.id}"></td>
+            <td ><a th:href="@{/endpoints/{id}(id=${endpoint.id})}" th:text="${endpoint.name}"></a></td>
+            <td th:text="${endpoint.url}"></td>
+            <td th:text="${endpoint.createdAt}"></td>
+            <td th:text="${endpoint.lastChecked}"></td>
+            <td th:text="${endpoint.monitoredInterval}"></td>
+            <td th:text="${endpoint.owner.username}"></td>
+            <td><a th:href="@{/endpoints/{id}/results(id=${endpoint.id})}">See results</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <h6>If you want to see and interact with an endpoint, click on the link on its name.</h6>
+    <br>
+    <h4>Create a new <a href="/endpoints/create">endpoint</a></h4>
+</div>
+</body>
+</html>

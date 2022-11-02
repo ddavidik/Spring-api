@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Job task - endpoint</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <br><br>
+    <table class="table table-responsive table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Url</th>
+            <th>Created at</th>
+            <th>Last checked</th>
+            <th>Interval</th>
+            <th>Owner</th>
+            <th>Delete</th>
+            <th>Results</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${endpoint.id}"></td>
+            <td th:text="${endpoint.name}"></td>
+            <td th:text="${endpoint.url}"></td>
+            <td th:text="${endpoint.createdAt}"></td>
+            <td th:text="${endpoint.lastChecked}"></td>
+            <td th:text="${endpoint.monitoredInterval}"></td>
+            <td th:text="${endpoint.owner.username}"></td>
+            <td>
+                <form th:action="@{/endpoints/{id}(id=${endpoint.id})}" th:object="${endpoint}" th:method="delete">
+                    <input type="hidden" th:field="${endpoint}">
+                    <button type="submit" class="btn btn-link">Delete</button>
+                </form>
+            </td>
+            <td><a th:href="@{/endpoints/{id}/results(id=${endpoint.id})}">See results</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <h2>Update this endpoint</h2>
+    <br>
+    <form action="#" th:action="@{/endpoints/{id}(id=${endpoint.id})}" th:object="${endpoint}" th:method="put" class="form">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" id="name" type="text" th:field="*{name}" placeholder="Enter name">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <div class="form-group">
+            <label for="name">Url</label>
+            <input class="form-control" id="url" type="text" th:field="*{url}" placeholder="Enter url">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></div>
+        </div>
+        <div class="form-group">
+            <label for="interval">Interval</label>
+            <input class="form-control" id="interval" type="number" th:field="*{monitoredInterval}" placeholder="Enter interval in seconds">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('monitoredInterval')}" th:errors="*{monitoredInterval}"></div>
+        </div>
+        <div class="alert alert-warning" th:if="${nameUrlError}">Name or URL already saved.</div>
+        <button type="submit" class="btn btn-primary">Update endpoint</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
+    </form>
+    <br><br>
+    <h4>Go back to <a href="/endpoints">all endpoints</a></h4>
+</div>
+</body>
+</html>

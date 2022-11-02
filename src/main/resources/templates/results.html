@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Job task - results</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <br><br>
+    <table class="table table-responsive table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Endpoint</th>
+            <th>Checked at</th>
+            <th>Http code</th>
+            <th>Payload</th>
+            <th>Error</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="result : ${results}">
+            <td th:text="${result.id}"></td>
+            <td><a th:href="@{/endpoints/{id}(id=${result.endpoint.id})}" th:text="${result.endpoint.name}"></a></td>
+            <td th:text="${result.checkedAt}"></td>
+            <td th:text="${result.httpCode}"></td>
+            <td th:style="'max-width: 500px; overflow: auto'" th:text="${result.payload}"></td>
+            <td th:text="${result.error}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <h4>Go back to <a href="/endpoints">all endpoints</a></h4>
+</div>
+</body>
+</html>
